@@ -1,27 +1,42 @@
-# GymChurn Predictor: Sistema Inteligente de Retención de Socios 🏋️‍♂️📊
+# 🏋️‍♂️ Sistema de Predicción de Bajas y Retención Activa (Gym Churn & GenAI)
 
-## 📋 Descripción del Proyecto
-Este proyecto de fin de curso para el ciclo de **IA y Big Data** tiene como objetivo predecir la probabilidad de baja de los socios de un gimnasio. Utilizando técnicas de **Machine Learning** y procesamiento de **Big Data**, el sistema identifica patrones de comportamiento (asistencia, perfil demográfico y tipo de cuota) para generar alertas tempranas y facilitar acciones de retención automatizadas.
+## 📌 Descripción del Proyecto
+Este proyecto implementa una solución integral de Inteligencia Artificial y Big Data para un centro deportivo. El objetivo principal es anticipar las posibles bajas de socios (Churn Prediction) a partir de datos demográficos y de comportamiento (accesos diarios) y automatizar estrategias de retención personalizadas mediante IA Generativa.
+
+## ⚙️ Arquitectura de la Solución
+
+El proyecto está estructurado en 4 fases principales:
+
+1. **Pipeline de Datos (ETL):** - Integración de registros históricos de altas/bajas de 2024 y 2025.
+   - Fusión y procesamiento de logs masivos de accesos diarios mediante `pandas`.
+   - Feature Engineering: Creación de variables de comportamiento (frecuencia, recencia, estacionalidad) descartando perfiles anómalos (pases de 1-5 días).
+
+2. **Machine Learning (Predictivo):**
+   - Entrenamiento y validación de modelos de clasificación para predecir la probabilidad de baja.
+   - Comparación de algoritmos y optimización de hiperparámetros buscando maximizar el Recall y F1-Score.
+
+3. **Automatización y Triggers:**
+   - Creación de un entorno simulado de base de datos con usuarios activos.
+   - Implementación de un script automatizado que genera un informe periódico (semanal/mensual) con los usuarios en zona de riesgo.
+
+4. **IA Generativa y Visualización (Prescriptivo):**
+   - Integración de un LLM que consume el informe de riesgo y redacta correos de retención altamente personalizados basados en el perfil y comportamiento de cada socio.
+   - Dashboard interactivo en Power BI para monitorizar el riesgo global de la cartera de clientes.
 
 ## 🛠️ Stack Tecnológico
-* **Lenguaje:** Python (Pandas, Scikit-learn, XGBoost/LightGBM).
-* **Almacenamiento/Procesamiento:** SQL para la base de datos de usuarios y Python para ETL de archivos Excel.
-* **Visualización:** Power BI para el dashboard de análisis exploratorio y resultados.
-* **IA Generativa:** LLM (vía API o local) para la generación de campañas de marketing personalizadas.
-* **Gestión:** Jira (Metodología Ágil) y GitHub (Control de versiones).
+* **Lenguaje:** Python
+* **Procesamiento y Análisis:** Pandas, NumPy
+* **Machine Learning:** Scikit-Learn / XGBoost / LightGBM
+* **Base de Datos:** SQLite / SQLAlchemy (para la simulación del trigger)
+* **IA Generativa:** (API del LLM seleccionado)
+* **Visualización:** Power BI
+* **Gestión y Control:** Jira (Scrum), Git/GitHub
 
-## 📂 Estructura de Datos
-El modelo se nutre de tres fuentes principales:
-1.  **Dataset de Altas:** Información demográfica y contractual de socios activos.
-2.  **Dataset de Bajas (2024-2025):** Histórico de socios que abandonaron el centro.
-3.  **Registros de Acceso (Lunes-Domingo):** Datos de actividad diaria durante 2024 y 2025 (crucial para medir la frecuencia de uso).
-
-## ⚙️ Arquitectura del Sistema
-El flujo de trabajo se divide en cuatro fases:
-1.  **ETL & Limpieza:** Unificación de los 7 archivos de accesos y cruce con datos de socios.
-2.  **Ingeniería de Variables (Feature Engineering):** Creación de métricas como "días desde la última visita", "frecuencia semanal media" y "antigüedad".
-3.  **Modelado:** Entrenamiento y comparativa de modelos de clasificación (Random Forest, Gradient Boosting, etc.).
-4.  **Automatización:** Trigger periódico que analiza la base de datos activa y genera un informe de riesgo.
-
-## 🤖 Implementación de LLM
-Integración de un modelo de lenguaje para transformar el **% de probabilidad de baja** en comunicaciones personalizadas (emails/notificaciones) que incentiven al socio a volver, basándose en su perfil específico.
+## 📂 Estructura del Repositorio
+```text
+├── data/           # Datasets crudos y procesados (ignorados en git)
+├── notebooks/      # Jupyter Notebooks (EDA, ETL, Modelado)
+├── src/            # Scripts de automatización, triggers y conexión con LLM
+├── dashboard/      # Archivos de Power BI
+├── .gitignore
+└── README.md
